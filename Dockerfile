@@ -1,4 +1,4 @@
-FROM node:0.10.38
+FROM node:7.0.0
 MAINTAINER Nathan LeClaire <nathan@docker.com>
 
 ADD . /app
