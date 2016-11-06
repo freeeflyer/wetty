@@ -9,7 +9,7 @@ websockets instead of Ajax and hence better response time.
 
 hterm source - https://chromium.googlesource.com/apps/libapps/+/master/hterm/
 
-![Wetty](/terminal.png?raw=true)
+![Wetty](https://github.com/freeeflyer/wetty/blob/master/terminal.png?raw=true)
 
 Install
 -------
