@@ -1,5 +1,5 @@
 FROM node:7.0.0
-MAINTAINER Nathan LeClaire <nathan@docker.com>
+MAINTAINER Nicolas Zagulajew <docker.com@xoop.org>
 
 ADD . /app
 WORKDIR /app
