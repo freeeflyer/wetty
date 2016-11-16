@@ -1,5 +1,5 @@
-Wetty = Web + tty
------------------
+Wetty Docker
+============
 
 Terminal over HTTP and HTTPS. Wetty is an alternative to
 ajaxterm/anyterm but much better than them because wetty uses ChromeOS'
@@ -9,52 +9,54 @@ websockets instead of Ajax and hence better response time.
 
 hterm source - https://chromium.googlesource.com/apps/libapps/+/master/hterm/
 
-![Wetty](https://github.com/freeeflyer/wetty/blob/master/terminal.png?raw=true)
+![Wetty](/terminal.png?raw=true)
 
-Install
--------
+Dockerized Version
+==================
 
-*  `git clone https://github.com/krishnasrinivas/wetty`
+This repo includes a Dockerfile you can use to run a Dockerized version of wetty.  You can run
+whatever you want!
 
-*  `cd wetty`
+Just do:
 
-*  `npm install`
+```
+    docker run ==name term -p 3000:3000 -dt nathanleclaire/wetty
+```
 
-Run on HTTP:
------------
+Visit the appropriate URL in your browser (`[localhost|$(boot2docker ip)]:PORT`).  
+The username is `term` and the password is `term`.
 
-    node app.js -p 3000
+Compose File
+============
+The IP is binded on localhost on this example because I recommand using 
+this behind a proxy preferably on https..
 
-If you run it as root it will launch `/bin/login` (where you can specify
-the user name), else it will launch `ssh` and connect by default to
-`localhost`.
+```python
+  wetty:
+    image: freeflyer/wetty
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - front
+```
 
-If instead you wish to connect to a remote host you can specify the
-`--sshhost` option, the SSH port using the `--sshport` option and the
-SSH user using the `--sshuser` option.
+Proxy Setting
+=============
 
-You can also specify the SSH user name in the address bar like this:
+If you are running `app.js` as `root` and have a proxy you have to use:
 
-  `http://yourserver:3000/wetty/ssh/<username>`
+    http://yourserver.com/wetty
 
-Run on HTTPS:
-------------
+Else if you are running `app.js` as a regular user you have to use:
 
-Always use HTTPS! If you don't have SSL certificates from a CA you can
-create a self signed certificate using this command:
+    http://yourserver.com/wetty/ssh/<username>
 
-  `openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 30000 -nodes`
+**Note that if your proxy is configured for HTTPS you should run wetty without SSL.**
 
-And then run:
 
-    node app.js --sslkey key.pem --sslcert cert.pem -p 3000
-
-Again, if you run it as root it will launch `/bin/login`, else it will
-launch SSH to `localhost` or a specified host as explained above.
-
-Run wetty behind nginx:
-----------------------
-
+nginx
+-----
+***** Not tested *****
 Put the following configuration in nginx's conf:
 
     location /wetty {
@@ -70,42 +72,26 @@ Put the following configuration in nginx's conf:
 	    proxy_set_header X-NginX-Proxy true;
     }
 
-If you are running `app.js` as `root` and have an Nginx proxy you have to use:
+apache
+------
 
-    http://yourserver.com/wetty
+Here is an apache proxy configuration example:
 
-Else if you are running `app.js` as a regular user you have to use:
-
-    http://yourserver.com/wetty/ssh/<username>
-
-**Note that if your Nginx is configured for HTTPS you should run wetty without SSL.**
-
-Dockerized Version
-------------------
-
-This repo includes a Dockerfile you can use to run a Dockerized version of wetty.  You can run
-whatever you want!
-
-Just do:
-
-```
-    docker run --name term -p 3000 -dt nathanleclaire/wetty
+```Apache
+ProxyPass /wetty http://127.0.0.1:3000/wetty
+ProxyPassReverse /wetty http://127.0.0.1:3000/wetty
+<Location /wetty>
+    # Auth changes in 2.4 - see http://httpd.apache.org/docs/2.4/upgrading.html#run-time
+    AuthUserFile /etc/apache2/xmisspasswd
+    AuthType Basic
+    AuthName "WTF"
+    Require valid-user
+</Location>
 ```
 
-Visit the appropriate URL in your browser (`[localhost|$(boot2docker ip)]:PORT`).  
-The username is `term` and the password is `term`.
 
-Run wetty as a service daemon
------------------------------
+ToDo
+====
 
-Install wetty globally with -g option:
-
-```bash
-    $ sudo npm install wetty -g
-    $ sudo cp /usr/local/lib/node_modules/wetty/bin/wetty.conf /etc/init
-    $ sudo start wetty
-```
-
-This will start wetty on port 3000. If you want to change the port or redirect stdout/stderr you should change the last line in `wetty.conf` file, something like this:
-
-    exec sudo -u root wetty -p 80 >> /var/log/wetty.log 2>&1
+* Setting user/password as a parameter (term/term) is not so safe
+* Add supervisord or any other watchdog like tool...
