@@ -4,7 +4,7 @@ MAINTAINER Nicolas Zagulajew (freeeflyer) <docker.com@xoop.org>
 ADD . /app
 WORKDIR /app
 
-RUN apk add --update vim bash openssh-client python make g++ \
+RUN apk add --update vim bash openssh-client python make g++ procps \
     && npm install \
     && adduser -S -h /home/term -s /bin/bash term \
     && apk del python make g++  \
