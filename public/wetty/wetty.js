@@ -45,7 +45,7 @@ socket.on('connect', function() {
 
         if (buf && buf != '')
         {
-            term.io.writeUTF16(buf);
+            term.io.writeUTF8(buf);
             buf = '';
         }
     });
@@ -56,7 +56,7 @@ socket.on('output', function(data) {
         buf += data;
         return;
     }
-    term.io.writeUTF16(data);
+    term.io.writeUTF8(data);
 });
 
 socket.on('disconnect', function() {
