@@ -1,13 +1,14 @@
-FROM node:7.0.0
-MAINTAINER Nicolas Zagulajew <docker.com@xoop.org>
+FROM node:alpine
+MAINTAINER Nicolas Zagulajew (freeeflyer) <docker.com@xoop.org>
 
 ADD . /app
 WORKDIR /app
-RUN npm install
-RUN apt-get update
-RUN apt-get install -y vim
-RUN useradd -d /home/term -m -s /bin/bash term
-RUN echo 'term:term' | chpasswd
+
+RUN apk add --update vim bash openssh-client python make g++ procps \
+    && npm install \
+    && adduser -S -h /home/term -s /bin/bash term \
+    && apk del python make g++  \
+    && echo 'term:term' | chpasswd 
 
 EXPOSE 3000
 

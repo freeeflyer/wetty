@@ -89,6 +89,11 @@ ProxyPassReverse /wetty http://127.0.0.1:3000/wetty
 </Location>
 ```
 
+Latest Changes
+==============
+
+Now based on node:alpine distribution 
+
 
 ToDo
 ====
