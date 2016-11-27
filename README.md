@@ -20,11 +20,17 @@ whatever you want!
 Just do:
 
 ```
-    docker run ==name term -p 3000:3000 -dt nathanleclaire/wetty
+    docker run --name term -e WETTY_USER=your_user -e WETTY_HASH='<your hash between simple quotes>' -p 3000:3000 -dt nathanleclaire/wetty
 ```
 
+Hash must be between single quotes, if not it will be truncated by special chars
+you can generate it like that :
+```
+    mkpasswd  -m sha-512 -S <your_salt> <<< <yourpass>
+```
+If you don't specify user & has, the default is term/term.
+
 Visit the appropriate URL in your browser (`[localhost|$(boot2docker ip)]:PORT`).  
-The username is `term` and the password is `term`.
 
 Compose File
 ============
@@ -34,6 +40,9 @@ this behind a proxy preferably on https..
 ```python
   wetty:
     image: freeflyer/wetty
+    environment:
+      - WETTY_USER=your_user
+      - WETTY_HASH=<your hash between simple quotes>
     ports:
       - "127.0.0.1:3000:3000"
     networks:
@@ -42,6 +51,7 @@ this behind a proxy preferably on https..
 
 Proxy Setting
 =============
+
 
 If you are running `app.js` as `root` and have a proxy you have to use:
 
@@ -98,5 +108,4 @@ Now based on node:alpine distribution
 ToDo
 ====
 
-* Setting user/password as a parameter (term/term) is not so safe
 * Add supervisord or any other watchdog like tool...
