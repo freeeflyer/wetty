@@ -7,6 +7,8 @@ terminal emulator (hterm) which is a full fledged implementation of
 terminal emulation written entirely in Javascript. Also it uses
 websockets instead of Ajax and hence better response time.
 
+Original version: https://github.com/krishnasrinivas/wetty
+
 hterm source - https://chromium.googlesource.com/apps/libapps/+/master/hterm/
 
 ![Wetty](https://github.com/freeeflyer/wetty/raw/master/terminal.png?raw=true)
@@ -14,8 +16,7 @@ hterm source - https://chromium.googlesource.com/apps/libapps/+/master/hterm/
 Dockerized Version
 ==================
 
-This repo includes a Dockerfile you can use to run a Dockerized version of wetty.  You can run
-whatever you want!
+This repo includes a Dockerfile you can use to run a Dockerized version of wetty.  
 
 Just do:
 
@@ -28,9 +29,11 @@ you can generate it like that :
 ```
     mkpasswd  -m sha-512 -S <your_salt> <<< <yourpass>
 ```
-If you don't specify user & has, the default is term/term.
+or simply copy it from your /etc/shadow 
 
-Visit the appropriate URL in your browser (`[localhost|$(boot2docker ip)]:PORT`).  
+If you don't specify user & hash, the default is term/term.
+
+Visit the appropriate URL in your browser
 
 Compose File
 ============
