@@ -112,3 +112,4 @@ ToDo
 ====
 
 * Add supervisord or any other watchdog like tool...
+* (DREAM) Browser plugin for ssh-key based login..
