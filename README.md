@@ -21,7 +21,7 @@ This repo includes a Dockerfile you can use to run a Dockerized version of wetty
 Just do:
 
 ```
-    docker run --name term -e WETTY_USER=your_user -e WETTY_HASH='<your hash between simple quotes>' -p 3000:3000 -dt nathanleclaire/wetty
+    docker run --name term -e WETTY_USER=your_user -e WETTY_HASH='<your hash between simple quotes>' -p 3000:3000 -dt freeflyer/wetty
 ```
 
 Hash must be between single quotes, if not it will be truncated by special chars
