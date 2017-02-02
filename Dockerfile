@@ -1,5 +1,5 @@
 FROM node:alpine
-MAINTAINER Nicolas Zagulajew (freeeflyer) <docker.com@xoop.org>
+LABEL maintainer Nicolas Zagulajew (freeeflyer) <docker.com@xoop.org>
 
 ADD . /app
 WORKDIR /app
