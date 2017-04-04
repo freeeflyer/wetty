@@ -8375,6 +8375,10 @@ hterm.ScrollPort.prototype.decorate = function(div) {
   // from screen.js.  I need to pick a better name for one of them to avoid
   // the collision.
   this.screen_ = doc.createElement('x-screen');
+  this.screen_.setAttribute('contenteditable', 'true');
+  this.screen_.setAttribute('spellcheck', 'false');
+  this.screen_.setAttribute('autocorrect', 'false');
+  this.screen_.setAttribute('autocomplete', 'false');
   this.screen_.setAttribute('role', 'textbox');
   this.screen_.setAttribute('tabindex', '-1');
   this.screen_.style.cssText = (
