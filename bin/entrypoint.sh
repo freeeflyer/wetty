@@ -8,4 +8,4 @@ echo ${WETTY_USER}:${WETTY_HASH} | chpasswd -e
 unset WETTY_USER
 unset WETTY_HASH
 
-/usr/local/bin/node app.js -p 3000 
+/usr/local/bin/node app.js -p ${WETTY_PORT}
